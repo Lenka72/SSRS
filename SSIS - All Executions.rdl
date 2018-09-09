@@ -4,6 +4,7 @@
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="RandomActsOfSQL">
+      <Transaction>true</Transaction>
       <DataSourceReference>RandomActsOfSQL</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>82088374-9c41-4aa0-850f-97acbd84b470</rd:DataSourceID>
@@ -58,7 +59,7 @@
         </Field>
         <Field Name="Duration">
           <DataField>Duration</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="CallerName">
           <DataField>CallerName</DataField>
@@ -79,6 +80,10 @@
         <Field Name="Status">
           <DataField>Status</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HasDataStatistics">
+          <DataField>HasDataStatistics</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -180,16 +185,9 @@ FROM    ( VALUES ( NULL, ''), ( 1, 'Created' ), ( 2, 'Running'), ( 3, 'Canceled'
       </Fields>
     </DataSet>
     <DataSet Name="ReportStyle">
-      <Query>
-        <DataSourceName>RandomActsOfSQL</DataSourceName>
-        <CommandText>SELECT  StyleName
-       ,LOWER(LTRIM(RTRIM(FontFamily))) AS FontFamily
-       ,FontSize
-       ,FontWeight
-       ,BackgroundColor
-       ,FontColor
-FROM    dbo.report_format WITH (NOLOCK);</CommandText>
-      </Query>
+      <SharedDataSet>
+        <SharedDataSetReference>Report Style</SharedDataSetReference>
+      </SharedDataSet>
       <Fields>
         <Field Name="StyleName">
           <DataField>StyleName</DataField>
@@ -232,6 +230,9 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                   <Width>1.19667in</Width>
                 </TablixColumn>
                 <TablixColumn>
+                  <Width>0.33333in</Width>
+                </TablixColumn>
+                <TablixColumn>
                   <Width>0.28125in</Width>
                 </TablixColumn>
                 <TablixColumn>
@@ -257,6 +258,9 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>3in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -341,7 +345,7 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>10</ColSpan>
+                        <ColSpan>11</ColSpan>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -353,6 +357,41 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox13">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>=Variables!TableCellWarning_FontFamily.Value</FontFamily>
+                                    <FontSize>=Variables!TableCellWarning_FontSize.Value</FontSize>
+                                    <FontWeight>=Variables!TableCellWarning_FontWeight.Value</FontWeight>
+                                    <Color>=Variables!TableCellWarning_FontColor.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -417,6 +456,43 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox61</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox31">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily />
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#666666</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox31</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -787,6 +863,55 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox15">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily />
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#666666</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox15</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <RightBorder>
+                              <Style>None</Style>
+                            </RightBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -868,9 +993,10 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>2</ColSpan>
+                        <ColSpan>3</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
@@ -1205,10 +1331,51 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox25">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>=Variables!TableHeading_FontFamily.Value</FontFamily>
+                                    <FontSize>=Variables!TableHeading_FontSize.Value</FontSize>
+                                    <FontWeight>=Variables!TableHeading_FontWeight.Value</FontWeight>
+                                    <Color>=Variables!TableHeading_FontColor.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox25</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>None</Style>
+                            </BottomBorder>
+                            <BackgroundColor>=Variables!TableHeading_BackgroundColor.Value</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.29167in</Height>
+                  <Height>0.30583in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1221,17 +1388,15 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                                 <TextRun>
                                   <Value>=Fields!FolderName.Value</Value>
                                   <Style>
-                                    <FontFamily>=Variables!Heading5_FontFamily.Value</FontFamily>
-                                    <FontSize>=Variables!Heading5_FontSize.Value</FontSize>
-                                    <FontWeight>=Variables!Heading5_FontWeight.Value</FontWeight>
-                                    <Color>=Variables!Heading5_FontColor.Value</Color>
+                                    <FontFamily>=Variables!Heading4_FontFamily.Value</FontFamily>
+                                    <FontSize>=Variables!Heading4_FontSize.Value</FontSize>
+                                    <Color>=Variables!Heading4_FontColor.Value</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1242,7 +1407,7 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>11</ColSpan>
+                        <ColSpan>12</ColSpan>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -1255,6 +1420,41 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox26">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>=Variables!Heading5_FontFamily.Value</FontFamily>
+                                    <FontSize>=Variables!Heading5_FontSize.Value</FontSize>
+                                    <FontWeight>=Variables!Heading5_FontWeight.Value</FontWeight>
+                                    <Color>=Variables!Heading5_FontColor.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox26</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -1358,7 +1558,7 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                             </BottomBorder>
                           </Style>
                         </Rectangle>
-                        <ColSpan>10</ColSpan>
+                        <ColSpan>11</ColSpan>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -1370,6 +1570,41 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox27">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox27</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                              <Width>1pt</Width>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -1459,9 +1694,41 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Image Name="PackagePerformance">
+                          <Source>Embedded</Source>
+                          <Value>GraphBlue</Value>
+                          <ActionInfo>
+                            <Actions>
+                              <Action>
+                                <Drillthrough>
+                                  <ReportName>SSIS - Package Performance Report</ReportName>
+                                  <Parameters>
+                                    <Parameter Name="FolderName">
+                                      <Value>=Fields!FolderName.Value</Value>
+                                    </Parameter>
+                                    <Parameter Name="PackageName">
+                                      <Value>=Fields!PackageName.Value</Value>
+                                    </Parameter>
+                                  </Parameters>
+                                </Drillthrough>
+                              </Action>
+                            </Actions>
+                          </ActionInfo>
+                          <ToolTip>= "Click here to view the package performance report."</ToolTip>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Image>
+                        <rd:Selected>true</rd:Selected>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Image Name="RunJob">
                           <Source>Embedded</Source>
-                          <Value>= IIF(Fields!Status.Value = "Running", "RunJobSmallDisabled", "RunJobSmall")</Value>
+                          <Value>= IIF(Fields!Status.Value = "Running" or Fields!Status.Value = "Pending", "RunJobSmallDisabled", "RunJobSmall")</Value>
                           <ActionInfo>
                             <Actions>
                               <Action>
@@ -1556,6 +1823,39 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox29">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox29</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -1616,6 +1916,35 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
                             </Border>
                           </Style>
                         </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox37">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox37</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2051,6 +2380,37 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Image Name="RowCount">
+                          <Source>Embedded</Source>
+                          <Value>RowCount</Value>
+                          <Sizing>FitProportional</Sizing>
+                          <ActionInfo>
+                            <Actions>
+                              <Action>
+                                <Drillthrough>
+                                  <ReportName>SSIS - Execution Data Statistics</ReportName>
+                                  <Parameters>
+                                    <Parameter Name="ExecutionId">
+                                      <Value>=Fields!ExecutionId.Value</Value>
+                                    </Parameter>
+                                  </Parameters>
+                                </Drillthrough>
+                              </Action>
+                            </Actions>
+                          </ActionInfo>
+                          <Visibility>
+                            <Hidden>= IIF(Fields!HasDataStatistics.Value = 0, True, False)</Hidden>
+                          </Visibility>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Image>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -2138,6 +2498,38 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
                             <RightBorder>
                               <Color>LightGrey</Color>
                             </RightBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox39">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily />
+                                    <Color>#333333</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox39</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -2454,6 +2846,40 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox34">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily />
+                                    <Color>#333333</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox34</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -2491,7 +2917,7 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>11</ColSpan>
+                        <ColSpan>12</ColSpan>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -2504,12 +2930,49 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox35">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>=Variables!TableCellWarning_FontFamily.Value</FontFamily>
+                                    <FontSize>=Variables!TableCellWarning_FontSize.Value</FontSize>
+                                    <FontWeight>=Variables!BodyTextWarning_FontWeight.Value</FontWeight>
+                                    <Color>=Variables!TableCellWarning_FontColor.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox35</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -2625,15 +3088,15 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
             <DataSetName>AllExecutions</DataSetName>
             <Top>0.15in</Top>
             <Left>0.25in</Left>
-            <Height>2.27834in</Height>
-            <Width>14.47792in</Width>
+            <Height>2.2925in</Height>
+            <Width>15.81125in</Width>
             <Style />
           </Tablix>
         </ReportItems>
-        <Height>2.76167in</Height>
+        <Height>2.655in</Height>
         <Style />
       </Body>
-      <Width>17.30084in</Width>
+      <Width>16.72792in</Width>
       <Page>
         <PageHeader>
           <Height>1.22917in</Height>
@@ -2663,7 +3126,7 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
               <Top>0.25in</Top>
               <Left>0.25in</Left>
               <Height>0.43in</Height>
-              <Width>8in</Width>
+              <Width>8.47792in</Width>
               <Style>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
@@ -2722,7 +3185,7 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
               <Top>0.85in</Top>
               <Left>0.25in</Left>
               <Height>0.25in</Height>
-              <Width>8in</Width>
+              <Width>1in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -2755,6 +3218,94 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
               <Height>0.25in</Height>
               <Width>1.59375in</Width>
               <ZIndex>2</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox19">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value EvaluationMode="Constant">Parameter Value Report</Value>
+                      <Style>
+                        <FontFamily>= Variables!Heading2_FontFamily.Value</FontFamily>
+                        <FontSize>= Variables!Heading2_FontSize.Value</FontSize>
+                        <FontWeight>= Variables!Heading2_FontWeight.Value</FontWeight>
+                        <Color>= Variables!Heading2_FontColor.Value</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <ActionInfo>
+                <Actions>
+                  <Action>
+                    <Drillthrough>
+                      <ReportName>SSIS - Parameter Value Report</ReportName>
+                    </Drillthrough>
+                  </Action>
+                </Actions>
+              </ActionInfo>
+              <Top>0.85in</Top>
+              <Left>3.79736in</Left>
+              <Height>0.25in</Height>
+              <Width>3in</Width>
+              <ZIndex>3</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox18">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>High Level Execution Statistics</Value>
+                      <Style>
+                        <FontFamily>= Variables!Heading2_FontFamily.Value</FontFamily>
+                        <FontSize>= Variables!Heading2_FontSize.Value</FontSize>
+                        <FontWeight>= Variables!Heading2_FontWeight.Value</FontWeight>
+                        <Color>= Variables!Heading2_FontColor.Value</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <ActionInfo>
+                <Actions>
+                  <Action>
+                    <Drillthrough>
+                      <ReportName>SSIS - High Level Execution Statistics</ReportName>
+                    </Drillthrough>
+                  </Action>
+                </Actions>
+              </ActionInfo>
+              <Top>0.85in</Top>
+              <Left>1.31944in</Left>
+              <Height>0.25in</Height>
+              <Width>2.40848in</Width>
+              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -2949,7 +3500,7 @@ Fields!Status.Value = "Completed", Variables!BodyTextSuccess_FontColor.Value)</C
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
-      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfColumns>3</NumberOfColumns>
       <NumberOfRows>3</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
@@ -3006,6 +3557,16 @@ rg5+tAFz4h+OLXVIjp9oqyRo25p29R2j/q3ccCgA+G/h24vdLa7JMaXFxI8Y6ZQLGgb8Shx7UAen+LfC
       <ImageData>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</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="RowCount">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAABwAAAAbCAIAAADganh7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4gMJADUi2qGmIQAAAAd0RVh0QXV0aG9yAKmuzEgAAAAMdEVYdERlc2NyaXB0aW9uABMJISMAAAAKdEVYdENvcHlyaWdodACsD8w6AAAADnRFWHRDcmVhdGlvbiB0aW1lADX3DwkAAAAJdEVYdFNvZnR3YXJlAF1w/zoAAAALdEVYdERpc2NsYWltZXIAt8C0jwAAAAh0RVh0V2FybmluZwDAG+aHAAAAB3RFWHRTb3VyY2UA9f+D6wAAAAh0RVh0Q29tbWVudAD2zJa/AAAABnRFWHRUaXRsZQCo7tInAAADWklEQVRIibWVTU8TURSGzzjTDhDaUtppCUJoN12IkigLEtGFlTZBQzddShXciSsgCi7UH+DHH2BPIrCSboi1CdQuMEA6tgQKFFrtjAtpCx0S5iOdcXHxMpCaYJCzOs+8Z07uOfedDKFqmqZp8F+DAgBNVWVZ/l8djTRNYeA4juO487Rzu90MwwA6KYr5+flEgr3c3IywWCrxPHe1/SouiH2J3b51G+PS8lL7lfba2lqEme1MX1+fz+cDAAp0+/Te8Xq9XpSnVlPRaPTJkyGsJtiEHl+9fvngQb/T6UQ4NfXhSNDg0nnm/VtcSFNCVTVVrciyPDk5GfkUMZlNSDg8PBQEweFw4NJcLtfW1oaR53mGcRgMR7dSKpZCD0M+n89o1N0+ANy7d7+7uxvl6Y10PB5/PPgYq2Pjz8fHXmB8++7NwKMBu51BODv7EUuUBsdXVV9fb7PZUG42m2maxggAJEnq0WAwNDRY8ZO6ujosXchOT4yfzWaXl5dQnvueKxQKGAFAkiQ9CoKQTCXz+R8IeZ53NjmrNN3ezojiIcqLpdLu7q/FxUWsyrKsx3K5zCYS2Px5Ln/9xvUqTb3eu6fMPzT0FKvsN1aPr16/7O8P
+VTH/Be30YsxfUTVVrSjI/JHPZp35y+Uyng4Astmsy+XCyHGcw+HE5i8Wi6FQNfP39vZ23/yr+cdfjD1/Nobx3fu3jx4O2O12hOHwLJYoVdNUTQMAmqatDY24aLew29h4jABAkqQeDQaD1WrFT7D5NQBKkUQEwWBQf+qOjmsdHdcwypJSbXvVg5IkKZlM2mw2t9u9s7NTKBQAoLOz8+DgIJ1OA4DL5bLb7anVlCRJKyvL+E1BEFKrKY7LI+R/6swvimI4HLZYLMPDw5ubm2tra7FYbHp6en9/Px6PZzKZQCDQ09PDsomurq7Fr8fm93g8GxtpjDRNN//5a1AWiyUYDEYiEQDw+/1+v59lWQBoaWkJBAITExOobnBw8B/G10M0Gl1fXxcE4UijKKPRiPJLJEUQxNl6Eieasizb1NQ0MjKCsLW11ePxoJwkSYI465dyum5hYWFmZgYAtra2RkdH5+bmztjoxFErlYqiKKIomkwmQRBEUQQAhmEURdnb2wMAk8lUU1NDEATAGceH34PTcrNG6o3/AAAAAElFTkSuQmCC</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="GraphBlue">
+      <MIMEType>image/jpeg</MIMEType>
+      <ImageData>/9j/4AAQSkZJRgABAAEASABIAAD//gAfTEVBRCBUZWNobm9sb2dpZXMgSW5jLiBWMS4wMQD/2wCEAAUFBQgFCAwHBwwMCQkJDA0MDAwMDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0BBQgICgcKDAcHDA0MCgwNDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDf/EAaIAAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKCwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+foRAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/AABEIABgAIAMBEQACEQEDEQH/2gAMAwEAAhEDEQA/APruMhxtwMfd+4ykcHoeCf8AeXg9RQMozxrDjYkkjtkqoklAyq7uSZMAE4GcHryKpK/WyM3Ll0Sbb6Ly9fUkW3hcNtLnBIP7ybgjGQf3nBGeRxilZrQaldXX/Deo+G4Dgp5bIACFZgCGAYqCG3MS
+WUBxu5weecgU1br/AF/Wgozu0rNX2v1/H52dn5bi+aIAN+7LNhAxXLHa5CrgnggEgH5gASRxUpX/AF8hyly+vRd3/X3bvQII5ADJLne2PlGCqDyxlVbClucksRk56AAAN22Wy/q4opq8nu/wS6fi9evlsLPZxTMS6nOCMg7SQdhIJUjOSo6+lCk1sDhF6tEksSyKQdwAIIwdvKvkcqQcccjowyrAqSCk7FWTtfo7lT5LVmn2Z+7yHGDkNyFZsK244YgDdleWA+U8gtrzddhn9pR4xtPA65TH3Bjv3J25GQCOfl+akMc2pRjJC54J4KdPlx3HX8sggkcZAJ1uPMXcqfKe4ZP7xzwWB469OnvxQM//2Q==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>en-US</Language>
