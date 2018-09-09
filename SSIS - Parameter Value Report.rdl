@@ -92,7 +92,7 @@
         <CommandText>SELECT  NULL AS Value
        ,'' AS Label
 UNION
-SELECT  F.folder_id AS Value
+SELECT  F.name AS Value
        ,F.name AS Label
 FROM    SSISDB.catalog.folders F WITH (NOLOCK)
 ORDER BY Label;</CommandText>
@@ -100,7 +100,7 @@ ORDER BY Label;</CommandText>
       <Fields>
         <Field Name="Value">
           <DataField>Value</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Label">
           <DataField>Label</DataField>
@@ -118,9 +118,6 @@ ORDER BY Label;</CommandText>
         </QueryParameters>
         <CommandText>SELECT  NULL AS Value
        ,'' AS Label
-UNION
-SELECT 'Not Assigned'AS Value
-	  ,'Not Assigned' AS Label
 UNION
 SELECT  P.name AS Value
        ,P.name AS Label
@@ -152,13 +149,12 @@ ORDER BY Label;</CommandText>
         <CommandText>SELECT  NULL AS Value
        ,'' AS Label
 UNION
-SELECT  'Not Assigned' AS Value
-	  ,'Not Assigned' AS Label
-UNION
 SELECT  P.name AS Value
        ,P.name AS Label
 FROM    SSISDB.catalog.packages P WITH (NOLOCK)
-WHERE P.project_id = ISNULL(@ProjectName, P.project_id)
+INNER JOIN SSISDB.catalog.projects P2 WITH (NOLOCK)
+ON P2.project_id = P.project_id
+WHERE P2.name = ISNULL(@ProjectName, P2.name)
 ORDER BY Label;</CommandText>
       </Query>
       <Fields>
@@ -1495,6 +1491,9 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
             <TablixRowHierarchy>
               <TablixMembers>
                 <TablixMember>
+                  <Visibility>
+                    <Hidden>=IIF(CountRows() = 0, True, False)</Hidden>
+                  </Visibility>
                   <KeepTogether>true</KeepTogether>
                 </TablixMember>
                 <TablixMember>
@@ -1673,7 +1672,7 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
               <Top>0.83681in</Top>
               <Left>0.25in</Left>
               <Height>0.25in</Height>
-              <Width>8in</Width>
+              <Width>1in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -1706,6 +1705,94 @@ FROM    dbo.report_format WITH (NOLOCK);</CommandText>
               <Height>0.25in</Height>
               <Width>1.59375in</Width>
               <ZIndex>2</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox19">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>All Executions</Value>
+                      <Style>
+                        <FontFamily>= Variables!Heading2_FontFamily.Value</FontFamily>
+                        <FontSize>= Variables!Heading2_FontSize.Value</FontSize>
+                        <FontWeight>= Variables!Heading2_FontWeight.Value</FontWeight>
+                        <Color>= Variables!Heading2_FontColor.Value</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <ActionInfo>
+                <Actions>
+                  <Action>
+                    <Drillthrough>
+                      <ReportName>SSIS - All Executions</ReportName>
+                    </Drillthrough>
+                  </Action>
+                </Actions>
+              </ActionInfo>
+              <Top>0.83681in</Top>
+              <Left>1.31944in</Left>
+              <Height>0.25in</Height>
+              <Width>1.54861in</Width>
+              <ZIndex>3</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox20">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>High Level Execution Statistics</Value>
+                      <Style>
+                        <FontFamily>= Variables!Heading2_FontFamily.Value</FontFamily>
+                        <FontSize>= Variables!Heading2_FontSize.Value</FontSize>
+                        <FontWeight>= Variables!Heading2_FontWeight.Value</FontWeight>
+                        <Color>= Variables!Heading2_FontColor.Value</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <ActionInfo>
+                <Actions>
+                  <Action>
+                    <Drillthrough>
+                      <ReportName>SSIS - High Level Execution Statistics</ReportName>
+                    </Drillthrough>
+                  </Action>
+                </Actions>
+              </ActionInfo>
+              <Top>0.83681in</Top>
+              <Left>2.92361in</Left>
+              <Height>0.25in</Height>
+              <Width>2.40848in</Width>
+              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
