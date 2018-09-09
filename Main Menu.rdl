@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="RandomActsOfSQL">
+      <DataSourceReference>RandomActsOfSQL</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>ea370176-9e92-4365-8ae5-c38a9808e86c</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="MainMenu">
+      <Query>
+        <DataSourceName>RandomActsOfSQL</DataSourceName>
+        <CommandText>SELECT RTRIM(REPLACE(LEFT(C.Name, CALC1.StartingPoint) , '-', '')) AS GroupName
+		,LTRIM(SUBSTRING(C.Name, CALC1.StartingPoint, (LEN(C.Name) - CALC1.StartingPoint) + 1)) AS ReportName
+		,C.Name AS FullReportName
+		,CALC1.FolderName
+FROM ReportServer.dbo.Catalog C WITH (NOLOCK)
+CROSS APPLY (SELECT CHARINDEX('-', C.Name) + 1 AS StartngPoint
+,PARSENAME(REPLACE(C.Path, '/', '.'), 2) AS FolderName) CALC1 (StartingPoint, FolderName)
+WHERE C.Type = 2
+AND C.Name NOT IN ('SSIS - All Messages', 'Main Menu', 'SSIS - Execution Data Statistics', 'Process Status', 'SSIS - Package Performance Report')
+AND CALC1.FolderName = 'Random Acts of SQL'
+ORDER BY C.Name;</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="GroupName">
+          <DataField>GroupName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ReportName">
+          <DataField>ReportName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FullReportName">
+          <DataField>FullReportName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FolderName">
+          <DataField>FolderName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="ReportStyle">
+      <SharedDataSet>
+        <SharedDataSetReference>Report Style</SharedDataSetReference>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="StyleName">
+          <DataField>StyleName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FontFamily">
+          <DataField>FontFamily</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FontSize">
+          <DataField>FontSize</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FontWeight">
+          <DataField>FontWeight</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="BackgroundColor">
+          <DataField>BackgroundColor</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FontColor">
+          <DataField>FontColor</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="MainMenuNew">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>0.5in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>3.33854in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.41667in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="Rectangle1">
+                          <ReportItems>
+                            <Textbox Name="GroupName">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!GroupName.Value</Value>
+                                      <Style>
+                                        <FontStyle>= Variables!TableHeading_FontWeight.Value</FontStyle>
+                                        <FontFamily>= Variables!Heading1_FontSize.Value</FontFamily>
+                                        <FontSize>=Variables!Heading1_FontSize.Value</FontSize>
+                                        <Color>=Variables!Heading1_FontColor.Value</Color>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>GroupName</rd:DefaultName>
+                              <Height>0.32292in</Height>
+                              <Width>3.66146in</Width>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Rectangle>
+                        <ColSpan>2</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>=Variables!TableHeading_FontFamily.Value</FontFamily>
+                                    <FontSize>=Variables!TableHeading_FontSize.Value</FontSize>
+                                    <FontWeight>=Variables!TableHeading_FontWeight.Value</FontWeight>
+                                    <Color>=Variables!TableHeading_FontColor.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="ReportName1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ReportName.Value</Value>
+                                  <Style>
+                                    <FontFamily>=Variables!TableHeading_FontFamily.Value</FontFamily>
+                                    <FontSize>=Variables!TableHeading_FontSize.Value</FontSize>
+                                    <FontWeight>=Variables!TableHeading_FontWeight.Value</FontWeight>
+                                    <Color>=Variables!Heading1_FontColor.Value</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>ReportName1</rd:DefaultName>
+                          <ActionInfo>
+                            <Actions>
+                              <Action>
+                                <Drillthrough>
+                                  <ReportName>= Fields!FullReportName.Value</ReportName>
+                                </Drillthrough>
+                              </Action>
+                            </Actions>
+                          </ActionInfo>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="GroupName1">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!GroupName.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!GroupName.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixMembers>
+                    <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
+                      <Group Name="Details" />
+                      <Visibility>
+                        <ToggleItem>GroupName</ToggleItem>
+                      </Visibility>
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>MainMenu</DataSetName>
+            <Top>0.19667in</Top>
+            <Left>0.25in</Left>
+            <Height>0.66667in</Height>
+            <Width>3.83854in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+        </ReportItems>
+        <Height>2.55083in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <Variables>
+    <Variable Name="Heading1_FontFamily">
+      <Value>=Lookup("Heading1", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading1_FontSize">
+      <Value>=Lookup("Heading1", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading1_FontWeight">
+      <Value>=iif((Lookup("Heading1", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="Heading1_BackgroundColor">
+      <Value>=Lookup("Heading1", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading1_FontColor">
+      <Value>=Lookup("Heading1", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading2_FontFamily">
+      <Value>=Lookup("Heading2", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading2_FontSize">
+      <Value>=Lookup("Heading2", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading2_FontWeight">
+      <Value>=iif((Lookup("Heading2", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="Heading2_BackgroundColor">
+      <Value>=IIF((Lookup("Heading2", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle"))="","No Color",Lookup("Heading2", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle"))</Value>
+    </Variable>
+    <Variable Name="Heading2_FontColor">
+      <Value>=Lookup("Heading2", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading3_FontFamily">
+      <Value>=Lookup("Heading3", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading3_FontSize">
+      <Value>=Lookup("Heading3", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading3_FontWeight">
+      <Value>=iif((Lookup("Heading3", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="Heading3_BackgroundColor">
+      <Value>=Lookup("Heading3", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading3_FontColor">
+      <Value>=Lookup("Heading3", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading4_FontFamily">
+      <Value>=Lookup("Heading4", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading4_FontSize">
+      <Value>=Lookup("Heading4", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading4_FontWeight">
+      <Value>=iif((Lookup("Heading4", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="Heading4_BackgroundColor">
+      <Value>=Lookup("Heading4", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading4_FontColor">
+      <Value>=Lookup("Heading4", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading5_FontFamily">
+      <Value>=Lookup("Heading5", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading5_FontSize">
+      <Value>=Lookup("Heading5", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading5_FontWeight">
+      <Value>=iif((Lookup("Heading5", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="Heading5_BackgroundColor">
+      <Value>=Lookup("Heading5", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Heading5_FontColor">
+      <Value>=Lookup("Heading5", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeading_FontFamily">
+      <Value>=Lookup("TableHeading", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeading_FontSize">
+      <Value>=Lookup("TableHeading", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeading_FontWeight">
+      <Value>=iif((Lookup("TableHeading", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="TableHeading_BackgroundColor">
+      <Value>=Lookup("TableHeading", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeading_FontColor">
+      <Value>=Lookup("TableHeading", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel1_FontFamily">
+      <Value>=Lookup("TableSubLevel1", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel1_FontSize">
+      <Value>=Lookup("TableSubLevel1", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel1_FontWeight">
+      <Value>=iif((Lookup("TableSubLevel1", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel1_BackgroundColor">
+      <Value>=Lookup("TableSubLevel1", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel1_FontColor">
+      <Value>=Lookup("TableSubLevel1", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel2_FontFamily">
+      <Value>=Lookup("TableSubLevel2", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel2_FontSize">
+      <Value>=Lookup("TableSubLevel2", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel2_FontWeight">
+      <Value>=iif((Lookup("TableSubLevel2", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel2_BackgroundColor">
+      <Value>=Lookup("TableSubLevel2", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel2_FontColor">
+      <Value>=Lookup("TableSubLevel2", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel3_FontFamily">
+      <Value>=Lookup("TableSubLevel3", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel3_FontSize">
+      <Value>=Lookup("TableSubLevel3", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel3_FontWeight">
+      <Value>=iif((Lookup("TableSubLevel3", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel3_BackgroundColor">
+      <Value>=Lookup("TableSubLevel3", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableSubLevel3_FontColor">
+      <Value>=Lookup("TableSubLevel3", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableCellWarning_FontFamily">
+      <Value>=Lookup("TableCellWarning", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableCellWarning_FontSize">
+      <Value>=Lookup("TableCellWarning", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableCellWarning_FontWeight">
+      <Value>=iif((Lookup("TableCellWarning", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="TableCellWarning_BackgroundColor">
+      <Value>=Lookup("TableCellWarning", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableCellWarning_FontColor">
+      <Value>=Lookup("TableCellWarning", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableAlternatingRows_FontFamily">
+      <Value>=Lookup("TableAlternatingRows", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableAlternatingRows_FontSize">
+      <Value>=Lookup("TableAlternatingRows", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableAlternatingRows_FontWeight">
+      <Value>=iif((Lookup("TableAlternatingRows", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="TableAlternatingRows_BackgroundColor">
+      <Value>=Lookup("TableAlternatingRows", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableAlternatingRows_FontColor">
+      <Value>=Lookup("TableAlternatingRows", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyText_FontFamily">
+      <Value>=Lookup("BodyText", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyText_FontSize">
+      <Value>=Lookup("BodyText", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyText_FontWeight">
+      <Value>=iif((Lookup("BodyText", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="BodyText_BackgroundColor">
+      <Value>=Lookup("BodyText", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyText_FontColor">
+      <Value>=Lookup("BodyText", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextWarning_FontFamily">
+      <Value>=Lookup("BodyTextWarning", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextWarning_FontSize">
+      <Value>=Lookup("BodyTextWarning", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextWarning_FontWeight">
+      <Value>=iif((Lookup("BodyTextWarning", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="BodyTextWarning_BackgroundColor">
+      <Value>=Lookup("BodyTextWarning", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextWarning_FontColor">
+      <Value>=Lookup("BodyTextWarning", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSuccess_FontFamily">
+      <Value>=Lookup("BodyTextSuccess", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSuccess_FontSize">
+      <Value>=Lookup("BodyTextSuccess", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSuccess_FontWeight">
+      <Value>=iif((Lookup("BodyTextSuccess", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="BodyTextSuccess_BackgroundColor">
+      <Value>=Lookup("BodyTextSuccess", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSuccess_FontColor">
+      <Value>=Lookup("BodyTextSuccess", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Buttons_FontFamily">
+      <Value>=Lookup("Buttons", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Buttons_FontSize">
+      <Value>=Lookup("Buttons", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Buttons_FontWeight">
+      <Value>=iif((Lookup("Buttons", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="Buttons_BackgroundColor">
+      <Value>=Lookup("Buttons", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="Buttons_FontColor">
+      <Value>=Lookup("Buttons", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableCurrentRow_FontFamily">
+      <Value>=Lookup("TableCurrentRow", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableCurrentRow_FontSize">
+      <Value>=Lookup("TableCurrentRow", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableCurrentRow_FontWeight">
+      <Value>=iif((Lookup("TableCurrentRow", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle"))=True,"Bold","Default")</Value>
+    </Variable>
+    <Variable Name="TableCurrentRow_BackgroundColor">
+      <Value>=Lookup("TableCurrentRow", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableCurrentRow_FontColor">
+      <Value>=Lookup("TableCurrentRow", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeadingSubLevel_FontFamily">
+      <Value>=Lookup("TableHeadingSubLevel", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeadingSubLevel_FontSize">
+      <Value>=Lookup("TableHeadingSubLevel", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeadingSubLevel_FontWeight">
+      <Value>=Lookup("TableHeadingSubLevel", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeadingSubLevel_BackgroundColor">
+      <Value>=Lookup("TableHeadingSubLevel", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="TableHeadingSubLevel_FontColor">
+      <Value>=Lookup("TableHeadingSubLevel", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSubLevel_FontFamily">
+      <Value>=Lookup("BodyTextSubLevel", Fields!StyleName.Value, Fields!FontFamily.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSubLevel_FontSize">
+      <Value>=Lookup("BodyTextSubLevel", Fields!StyleName.Value, Fields!FontSize.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSubLevel_FontWeight">
+      <Value>=Lookup("BodyTextSubLevel", Fields!StyleName.Value, Fields!FontWeight.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSubLevel_BackgroundColor">
+      <Value>=Lookup("BodyTextSubLevel", Fields!StyleName.Value, Fields!BackgroundColor.Value, "ReportStyle")</Value>
+    </Variable>
+    <Variable Name="BodyTextSubLevel_FontColor">
+      <Value>=Lookup("BodyTextSubLevel", Fields!StyleName.Value, Fields!FontColor.Value, "ReportStyle")</Value>
+    </Variable>
+  </Variables>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>89a1abab-c18e-4dc7-8dd6-b2dcf6b40a9e</rd:ReportID>
+</Report>

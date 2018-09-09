@@ -169,16 +169,9 @@ ORDER BY Label;</CommandText>
       </Fields>
     </DataSet>
     <DataSet Name="ReportStyle">
-      <Query>
-        <DataSourceName>RandomActsOfSQL</DataSourceName>
-        <CommandText>SELECT  StyleName
-       ,LOWER(LTRIM(RTRIM(FontFamily))) AS FontFamily
-       ,FontSize
-       ,FontWeight
-       ,BackgroundColor
-       ,FontColor
-FROM    dbo.report_format WITH (NOLOCK);</CommandText>
-      </Query>
+      <SharedDataSet>
+        <SharedDataSetReference>Report Style</SharedDataSetReference>
+      </SharedDataSet>
       <Fields>
         <Field Name="StyleName">
           <DataField>StyleName</DataField>
